@@ -22,7 +22,14 @@ export default function BadgerMart(props) {
     return (
         <View>
             <Text style={{ fontSize: 28 }}>Welcome to Badger Mart!</Text>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    gap: 10,
+                    marginVertical: 10,
+                }}
+            >
                 <Button
                     title="PREVIOUS"
                     disabled={curItemIdx === 0}
@@ -38,9 +45,11 @@ export default function BadgerMart(props) {
                     }}
                 />
             </View>
-            {items.length !== 0 ?
+            {items.length !== 0 ? (
                 <BadgerSaleItem {...items[curItemIdx]} />
-            :   <Text>Loading...</Text>}
+            ) : (
+                <Text>Loading...</Text>
+            )}
         </View>
     );
 }

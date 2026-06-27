@@ -13,16 +13,16 @@ export default function BadgerSaleItem(props) {
             />
             <Text
                 style={{
-                    fontSize: "36",
-                    margin: "8",
+                    fontSize: 36,
+                    margin: 8,
                 }}
             >
                 {props.name}
             </Text>
-            <Text style={{ fontSize: "24", margin: "8" }}>
-                ${props.price.toFixed(2)} each
+            <Text style={{ fontSize: 24, margin: 8 }}>
+                ${Number(props.price).toFixed(2)} each
             </Text>
-            <Text style={{ fontSize: "16", margin: "8" }}>
+            <Text style={{ fontSize: 16, margin: 8 }}>
                 You can order up to {props.upperLimit} units!
             </Text>
         </View>
