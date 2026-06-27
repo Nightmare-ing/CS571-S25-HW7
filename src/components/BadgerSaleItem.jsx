@@ -20,7 +20,7 @@ export default function BadgerSaleItem(props) {
                 {props.name}
             </Text>
             <Text style={{ fontSize: "24", margin: "8" }}>
-                ${props.price?.toFixed(2)} each
+                ${props.price.toFixed(2)} each
             </Text>
             <Text style={{ fontSize: "16", margin: "8" }}>
                 You can order up to {props.upperLimit} units!
