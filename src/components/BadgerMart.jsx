@@ -50,6 +50,13 @@ export default function BadgerMart(props) {
             ) : (
                 <Text>Loading...</Text>
             )}
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Button title="-" />
+                <Text style={{ padding: 12, textAlignVertical: "center" }}>
+                    2
+                </Text>
+                <Button title="+" />
+            </View>
         </View>
     );
 }
