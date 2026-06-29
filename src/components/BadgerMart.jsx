@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 export default function BadgerMart(props) {
     const [items, setItems] = useState([]);
     const [curItemIdx, setCurItemIdx] = useState(0);
+    const [itemInBusket, setItemInBusket] = useState(0);
+
     useEffect(() => {
         fetch("https://cs571.org/rest/s25/hw7/items", {
             headers: {
@@ -20,7 +22,7 @@ export default function BadgerMart(props) {
     }, []);
 
     return (
-        <View>
+        <View style={{ height: "85%" }}>
             <Text style={{ fontSize: 28 }}>Welcome to Badger Mart!</Text>
             <View
                 style={{
@@ -31,31 +33,36 @@ export default function BadgerMart(props) {
                 }}
             >
                 <Button
+                    key={curItemIdx <= 0 ? "prev-disabled" : "prev-enabled"}
                     title="PREVIOUS"
-                    disabled={curItemIdx === 0}
+                    disabled={curItemIdx <= 0}
                     onPress={() => {
                         setCurItemIdx((prev) => prev - 1);
                     }}
                 />
                 <Button
                     title="NEXT"
-                    disabled={curItemIdx === items.length - 1}
+                    key={
+                        curItemIdx >= items.length ?
+                            "next-disabled"
+                        :   "next_enabled"
+                    }
+                    disabled={curItemIdx >= items.length}
                     onPress={() => {
                         setCurItemIdx((prev) => prev + 1);
                     }}
                 />
             </View>
-            {items.length !== 0 ? (
-                <BadgerSaleItem {...items[curItemIdx]} />
-            ) : (
-                <Text>Loading...</Text>
-            )}
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Button title="-" />
-                <Text style={{ padding: 12, textAlignVertical: "center" }}>
-                    2
-                </Text>
-                <Button title="+" />
+            <View style={{ flex: 1 }}>
+                {items.length !== 0 ?
+                    <BadgerSaleItem
+                        {...items[curItemIdx]}
+                        itemInBusket={itemInBusket}
+                        changeItemInBusketBy={(n) => {
+                            setItemInBusket((prev) => prev + n);
+                        }}
+                    />
+                :   <Text>Loading...</Text>}
             </View>
         </View>
     );

@@ -1,4 +1,4 @@
-import { Text, View, Image, Dimensions } from "react-native";
+import { Text, View, Image, Dimensions, Button } from "react-native";
 
 export default function BadgerSaleItem(props) {
     return (
@@ -25,6 +25,33 @@ export default function BadgerSaleItem(props) {
             <Text style={{ fontSize: 16, margin: 8 }}>
                 You can order up to {props.upperLimit} units!
             </Text>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Button
+                    key={
+                        props.itemInBusket <= 0 ? "dec-disabled" : "dec-enabled"
+                    }
+                    disabled={props.itemInBusket <= 0}
+                    title="-"
+                    onPress={() => {
+                        props.changeItemInBusketBy(-1);
+                    }}
+                />
+                <Text style={{ padding: 12, textAlignVertical: "center" }}>
+                    {props.itemInBusket}
+                </Text>
+                <Button
+                    key={
+                        props.itemInBusket >= props.upperLimit ?
+                            "inc-disabled"
+                        :   "inc-enabled"
+                    }
+                    disabled={props.itemInBusket >= props.upperLimit}
+                    title="+"
+                    onPress={() => {
+                        props.changeItemInBusketBy(1);
+                    }}
+                />
+            </View>
         </View>
     );
 }
