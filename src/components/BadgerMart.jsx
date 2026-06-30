@@ -43,9 +43,9 @@ export default function BadgerMart(props) {
                 <Button
                     title="NEXT"
                     key={
-                        curItemIdx >= items.length ?
-                            "next-disabled"
-                        :   "next_enabled"
+                        curItemIdx >= items.length
+                            ? "next-disabled"
+                            : "next-enabled"
                     }
                     disabled={curItemIdx >= items.length}
                     onPress={() => {

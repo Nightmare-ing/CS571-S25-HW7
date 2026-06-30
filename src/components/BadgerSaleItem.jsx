@@ -41,9 +41,9 @@ export default function BadgerSaleItem(props) {
                 </Text>
                 <Button
                     key={
-                        props.itemInBusket >= props.upperLimit ?
-                            "inc-disabled"
-                        :   "inc-enabled"
+                        props.itemInBusket >= props.upperLimit
+                            ? "inc-disabled"
+                            : "inc-enabled"
                     }
                     disabled={props.itemInBusket >= props.upperLimit}
                     title="+"
