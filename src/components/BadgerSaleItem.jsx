@@ -28,9 +28,11 @@ export default function BadgerSaleItem(props) {
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 <Button
                     key={
-                        props.itemInBusket <= 0 ? "dec-disabled" : "dec-enabled"
+                        props.itemNumInBusket <= 0 ?
+                            "dec-disabled"
+                        :   "dec-enabled"
                     }
-                    disabled={props.itemInBusket <= 0}
+                    disabled={props.itemNumInBusket <= 0}
                     title="-"
                     onPress={() => {
                         props.changeItemInBusketBy(props.name, -1);
@@ -41,11 +43,11 @@ export default function BadgerSaleItem(props) {
                 </Text>
                 <Button
                     key={
-                        props.itemInBusket >= props.upperLimit
-                            ? "inc-disabled"
-                            : "inc-enabled"
+                        props.itemNumInBusket >= props.upperLimit ?
+                            "inc-disabled"
+                        :   "inc-enabled"
                     }
-                    disabled={props.itemInBusket >= props.upperLimit}
+                    disabled={props.itemNumInBusket >= props.upperLimit}
                     title="+"
                     onPress={() => {
                         props.changeItemInBusketBy(props.name, 1);
