@@ -35,7 +35,7 @@ export default function BadgerSaleItem(props) {
                     disabled={props.itemNumInBusket <= 0}
                     title="-"
                     onPress={() => {
-                        props.changeItemInBusketBy(props.name, -1);
+                        props.changeItemInBusketBy(-1);
                     }}
                 />
                 <Text style={{ padding: 12, textAlignVertical: "center" }}>
@@ -50,7 +50,7 @@ export default function BadgerSaleItem(props) {
                     disabled={props.itemNumInBusket >= props.upperLimit}
                     title="+"
                     onPress={() => {
-                        props.changeItemInBusketBy(props.name, 1);
+                        props.changeItemInBusketBy(1);
                     }}
                 />
             </View>

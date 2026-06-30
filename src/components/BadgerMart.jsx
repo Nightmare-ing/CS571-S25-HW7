@@ -7,10 +7,8 @@ import { useEffect, useState } from "react";
 export default function BadgerMart(props) {
     const [items, setItems] = useState([]);
     const [curItemIdx, setCurItemIdx] = useState(0);
-    const [busket, setBusket] = useState({});
 
     const curItem = items.length !== 0 ? items[curItemIdx] : {};
-    const curItemNumInBusket = curItem.name ? busket[curItem.name] : 0;
 
     useEffect(() => {
         fetch("https://cs571.org/rest/s25/hw7/items", {
@@ -20,25 +18,12 @@ export default function BadgerMart(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setItems(data);
-                const initBusket = {};
                 for (let item of data) {
-                    initBusket[item.name] = 0;
+                    item["qty"] = 0;
                 }
-                setBusket(initBusket);
+                setItems(data);
             });
     }, []);
-
-    function changeItemInBusketBy(item, n) {
-        if (Object.hasOwn(busket, item)) {
-            setBusket((prev) => {
-                prev[item] += n;
-                return { ...prev };
-            });
-        } else {
-            setBusket({ ...busket, [item]: 1 });
-        }
-    }
 
     return (
         <View style={{ height: "85%" }}>
@@ -76,8 +61,13 @@ export default function BadgerMart(props) {
                 {items.length !== 0 ?
                     <BadgerSaleItem
                         {...curItem}
-                        itemNumInBusket={curItemNumInBusket}
-                        changeItemInBusketBy={changeItemInBusketBy}
+                        itemNumInBusket={curItem["qty"]}
+                        changeItemInBusketBy={(n) => {
+                            setItems((prev) => {
+                                prev[curItemIdx]["qty"] += n;
+                                return { ...prev };
+                            });
+                        }}
                     />
                 :   <Text style={{ textAlign: "center" }}>Loading...</Text>}
             </View>
