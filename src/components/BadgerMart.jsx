@@ -72,14 +72,14 @@ export default function BadgerMart(props) {
                     }}
                 />
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
                 {items.length !== 0 ?
                     <BadgerSaleItem
                         {...curItem}
                         itemNumInBusket={curItemNumInBusket}
                         changeItemInBusketBy={changeItemInBusketBy}
                     />
-                :   <Text>Loading...</Text>}
+                :   <Text style={{ textAlign: "center" }}>Loading...</Text>}
             </View>
         </View>
     );
