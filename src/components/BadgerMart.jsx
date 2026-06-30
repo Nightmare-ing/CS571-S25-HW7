@@ -10,7 +10,7 @@ export default function BadgerMart(props) {
     const [busket, setBusket] = useState({});
 
     const curItem = items.length !== 0 ? items[curItemIdx] : {};
-    const curItemNumInBusket = items.length !== 0 ? busket[curItem.name] : 0;
+    const curItemNumInBusket = curItem.name ? busket[curItem.name] : 0;
 
     useEffect(() => {
         fetch("https://cs571.org/rest/s25/hw7/items", {
@@ -21,6 +21,11 @@ export default function BadgerMart(props) {
             .then((res) => res.json())
             .then((data) => {
                 setItems(data);
+                const initBusket = {};
+                for (let item of data) {
+                    initBusket[item.name] = 0;
+                }
+                setBusket(initBusket);
             });
     }, []);
 
@@ -28,8 +33,7 @@ export default function BadgerMart(props) {
         if (Object.hasOwn(busket, item)) {
             setBusket((prev) => {
                 prev[item] += n;
-                console.log(prev);
-                return prev;
+                return { ...prev };
             });
         } else {
             setBusket({ ...busket, [item]: 1 });
@@ -58,9 +62,9 @@ export default function BadgerMart(props) {
                 <Button
                     title="NEXT"
                     key={
-                        curItemIdx >= items.length
-                            ? "next-disabled"
-                            : "next-enabled"
+                        curItemIdx >= items.length ?
+                            "next-disabled"
+                        :   "next-enabled"
                     }
                     disabled={curItemIdx >= items.length}
                     onPress={() => {
@@ -69,15 +73,13 @@ export default function BadgerMart(props) {
                 />
             </View>
             <View style={{ flex: 1 }}>
-                {items.length !== 0 ? (
+                {items.length !== 0 ?
                     <BadgerSaleItem
                         {...curItem}
                         itemNumInBusket={curItemNumInBusket}
                         changeItemInBusketBy={changeItemInBusketBy}
                     />
-                ) : (
-                    <Text>Loading...</Text>
-                )}
+                :   <Text>Loading...</Text>}
             </View>
         </View>
     );
