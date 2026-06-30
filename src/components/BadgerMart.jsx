@@ -65,7 +65,7 @@ export default function BadgerMart(props) {
                         changeItemInBusketBy={(n) => {
                             setItems((prev) => {
                                 prev[curItemIdx]["qty"] += n;
-                                return { ...prev };
+                                return [...prev];
                             });
                         }}
                     />
