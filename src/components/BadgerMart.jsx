@@ -9,6 +9,14 @@ export default function BadgerMart(props) {
     const [curItemIdx, setCurItemIdx] = useState(0);
 
     const curItem = items.length !== 0 ? items[curItemIdx] : {};
+    const itemNumInBusket =
+        items.length !== 0 ?
+            items.reduce((sum, item) => sum + item["qty"], 0)
+        :   0;
+    const cost = (
+        items.length !== 0 ?
+            items.reduce((sum, item) => sum + item["price"] * item["qty"], 0)
+        :   0).toFixed(2);
 
     useEffect(() => {
         fetch("https://cs571.org/rest/s25/hw7/items", {
@@ -70,6 +78,12 @@ export default function BadgerMart(props) {
                         }}
                     />
                 :   <Text style={{ textAlign: "center" }}>Loading...</Text>}
+            </View>
+            <View>
+                <Text style={{ textAlign: "center" }}>
+                    You have {itemNumInBusket} item(s) costing ${cost} in your
+                    cart!
+                </Text>
             </View>
         </View>
     );
