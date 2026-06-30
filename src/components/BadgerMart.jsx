@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 export default function BadgerMart(props) {
     const [items, setItems] = useState([]);
     const [curItemIdx, setCurItemIdx] = useState(0);
-    const [itemInBusket, setItemInBusket] = useState(0);
+    const [busket, setBusket] = useState({});
+
+    const curItem = items.length !== 0 ? items[curItemIdx] : {};
+    const curItemNumInBusket = items.length !== 0 ? busket[curItem.name] : 0;
 
     useEffect(() => {
         fetch("https://cs571.org/rest/s25/hw7/items", {
@@ -20,6 +23,18 @@ export default function BadgerMart(props) {
                 setItems(data);
             });
     }, []);
+
+    function changeItemInBusketBy(item, n) {
+        if (Object.hasOwn(busket, item)) {
+            setBusket((prev) => {
+                prev[item] += n;
+                console.log(prev);
+                return prev;
+            });
+        } else {
+            setBusket({ ...busket, [item]: 1 });
+        }
+    }
 
     return (
         <View style={{ height: "85%" }}>
@@ -54,15 +69,15 @@ export default function BadgerMart(props) {
                 />
             </View>
             <View style={{ flex: 1 }}>
-                {items.length !== 0 ?
+                {items.length !== 0 ? (
                     <BadgerSaleItem
-                        {...items[curItemIdx]}
-                        itemInBusket={itemInBusket}
-                        changeItemInBusketBy={(n) => {
-                            setItemInBusket((prev) => prev + n);
-                        }}
+                        {...curItem}
+                        itemNumInBusket={curItemNumInBusket}
+                        changeItemInBusketBy={changeItemInBusketBy}
                     />
-                :   <Text>Loading...</Text>}
+                ) : (
+                    <Text>Loading...</Text>
+                )}
             </View>
         </View>
     );
