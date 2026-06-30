@@ -1,4 +1,4 @@
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, Alert } from "react-native";
 import BadgerSaleItem from "./BadgerSaleItem";
 
 import CS571 from "@cs571/mobile-client";
@@ -26,12 +26,17 @@ export default function BadgerMart(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                for (let item of data) {
-                    item["qty"] = 0;
-                }
                 setItems(data);
+                cleanBusket();
             });
     }, []);
+
+    function cleanBusket() {
+        for (let item of items) {
+            item["qty"] = 0;
+        }
+        setItems([...items]);
+    }
 
     return (
         <View style={{ height: "85%" }}>
@@ -79,11 +84,30 @@ export default function BadgerMart(props) {
                     />
                 :   <Text style={{ textAlign: "center" }}>Loading...</Text>}
             </View>
-            <View>
-                <Text style={{ textAlign: "center", fontWeight: "bold" }}>
+            <View style={{ alignItems: "center" }}>
+                <Text
+                    style={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        marginVertical: 8,
+                    }}
+                >
                     You have {itemNumInBusket} item(s) costing ${cost} in your
                     cart!
                 </Text>
+                <Button
+                    key={itemNumInBusket ? "order-disabled" : "order-enabled"}
+                    title="PLACE ORDER"
+                    disabled={itemNumInBusket === 0}
+                    onPress={() => {
+                        Alert.alert(
+                            "Order Confirmed!",
+                            `Your order contains ${itemNumInBusket} items and costs $${cost}!`,
+                        );
+                        setCurItemIdx(0);
+                        cleanBusket();
+                    }}
+                />
             </View>
         </View>
     );
