@@ -55,11 +55,11 @@ export default function BadgerMart(props) {
                 <Button
                     title="NEXT"
                     key={
-                        curItemIdx >= items.length ?
+                        curItemIdx >= items.length - 1 ?
                             "next-disabled"
                         :   "next-enabled"
                     }
-                    disabled={curItemIdx >= items.length}
+                    disabled={curItemIdx >= items.length - 1}
                     onPress={() => {
                         setCurItemIdx((prev) => prev + 1);
                     }}
@@ -80,7 +80,7 @@ export default function BadgerMart(props) {
                 :   <Text style={{ textAlign: "center" }}>Loading...</Text>}
             </View>
             <View>
-                <Text style={{ textAlign: "center" }}>
+                <Text style={{ textAlign: "center", fontWeight: "bold" }}>
                     You have {itemNumInBusket} item(s) costing ${cost} in your
                     cart!
                 </Text>
