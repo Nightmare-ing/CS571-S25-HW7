@@ -26,16 +26,15 @@ export default function BadgerMart(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setItems(data);
-                cleanBusket();
+                resetQty(data);
             });
     }, []);
 
-    function cleanBusket() {
-        for (let item of items) {
+    function resetQty(data) {
+        for (let item of data) {
             item["qty"] = 0;
         }
-        setItems([...items]);
+        setItems([...data]);
     }
 
     return (
@@ -105,7 +104,7 @@ export default function BadgerMart(props) {
                             `Your order contains ${itemNumInBusket} items and costs $${cost}!`,
                         );
                         setCurItemIdx(0);
-                        cleanBusket();
+                        resetQty(items);
                     }}
                 />
             </View>
